@@ -1,0 +1,8 @@
+sp\exam\dto\ResponseDTO.class
+sp\exam\FriendConfiguration.class
+sp\exam\service\FriendServiceImpl.class
+sp\exam\service\FriendService.class
+sp\exam\repository\RepositorySimulator.class
+sp\exam\controller\FriendController.class
+sp\exam\FriendApplication.class
+sp\exam\dto\RequestDTO.class

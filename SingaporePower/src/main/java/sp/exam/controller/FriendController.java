@@ -68,7 +68,7 @@ public class FriendController {
 	
 	/**
 	 * Block to someone.
-	 * 
+	 * <p>
 	 * Using the requestor and the target as a parameter,
 	 * requestor will be added to the target's blocked list 
 	 * and <b>NOT</b> will be notified once the target notified everyone.
@@ -79,6 +79,15 @@ public class FriendController {
 		return service.block(request);
 	}
 	
+	/**
+	 * Notify everyone.
+	 * <p>
+	 * This method sends everyone linked to the sender the message in text parameter.
+	 * All that will be notified are the sender's subscriber, the sender's friends,
+	 * and the person the sender mentioned in text.
+	 * <p>
+	 * Please note that the one in blocked list will not be included in notification.
+	 */
 	@RequestMapping(value = "/notify")
 	public ResponseDTO notify(@RequestBody RequestDTO request) {
 		

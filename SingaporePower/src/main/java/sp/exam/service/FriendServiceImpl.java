@@ -17,6 +17,9 @@ import sp.exam.repository.RepositorySimulator;
 @Service
 public class FriendServiceImpl implements FriendService {
 
+	private static final String WHITE_SPACE_CHARS = "\\s";
+	private static final String EMAIL_PATTERN = ".+@.+\\..+";
+	
 	@Autowired
 	private RepositorySimulator repo;
 	
@@ -120,13 +123,23 @@ public class FriendServiceImpl implements FriendService {
 		}
 		
 		String sender = request.getSender();
+		ArrayList<String> recipients = new ArrayList<String>();
 		ResponseDTO response = new ResponseDTO();
-		response.getRecipients().addAll(repo.getFriendListById(sender));
-		response.getRecipients().addAll(repo.getSubscriberListById(sender));
-		//TODO add recipients mentioned in text body
+		response.setSuccess(true);
 		
-		response.getRecipients().removeAll(repo.getBlockedListById(sender));
-		return null;
+		String texts = request.getText();
+		for (String text : texts.split(WHITE_SPACE_CHARS)) {
+			if (text.matches(EMAIL_PATTERN)) {
+				recipients.add(text);
+			}
+		}
+		recipients.addAll(repo.getFriendListById(sender));
+		recipients.addAll(repo.getSubscriberListById(sender));
+		
+		recipients.removeAll(repo.getBlockedListById(sender));
+		
+		response.setRecipients(recipients);
+		return response;
 	}
 
 }

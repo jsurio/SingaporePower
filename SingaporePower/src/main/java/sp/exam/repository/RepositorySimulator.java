@@ -82,7 +82,7 @@ public class RepositorySimulator {
 	
 	public boolean addToBlocked(String requestor, String target) {
 
-		List<String> blockedList = getSubscriberListById(target);
+		List<String> blockedList = getBlockedListById(target);
 		
 		if (!blockedList.contains(requestor)) {
 			blockedList.add(requestor);

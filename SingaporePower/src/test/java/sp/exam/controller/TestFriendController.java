@@ -84,7 +84,7 @@ public class TestFriendController {
 	}
 	
 	@Test
-	public void dTestBlock() {
+	public void eTestBlock() {
 		RestAssured.given()
 		.headers(new Headers(new Header("Content-Type", "application/json")))
 		.body("{\r\n" + 
@@ -95,6 +95,37 @@ public class TestFriendController {
 		.then()
 		.assertThat()
 			.body("success", Matchers.equalTo(true))
+		;
+	}
+	
+	@Test
+	public void fTestNotify() {
+		RestAssured.given()
+		.headers(new Headers(new Header("Content-Type", "application/json")))
+		.body("{\r\n" + 
+				"\"sender\": \"john@example.com\",\r\n" + 
+				"\"text\": \"Hello World! kate@example.com\"\r\n" + 
+				"}")
+		.when().post("/friend/notify")
+		.then()
+		.assertThat()
+			.body("success", Matchers.equalTo(true))
+			.body("recipients", Matchers.hasItem("kate@example.com"))
+//			.body("recipients", Matchers.hasItem("andy@example.com"))
+		;
+		
+		RestAssured.given()
+		.headers(new Headers(new Header("Content-Type", "application/json")))
+		.body("{\r\n" + 
+				"\"sender\": \"requestor@example.com\",\r\n" + 
+				"\"text\": \"Hello World! nice@spexam.com\"\r\n" + 
+				"}")
+		.when().post("/friend/notify")
+		.then()
+		.assertThat()
+			.body("success", Matchers.equalTo(true))
+			.body("recipients", Matchers.not(Matchers.hasItem("target@example.com")))
+			.body("recipients", Matchers.hasItem("nice@spexam.com"))
 		;
 	}
 }

@@ -12,15 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class RepositorySimulator {
 	
-	private Map<String, Set<String>> friendMap = new HashMap<String, Set<String>>();
+	private Map<String, List<String>> friendMap = new HashMap<String, List<String>>();
 	
-	public Set<String> getFriendListByFriend(String friend) {
+	public List<String> getFriendListByFriend(String friend) {
 		
-		Set<String> friendList = null;
+		List<String> friendList = new ArrayList<String>();
 		if (friendMap.containsKey(friend)) {
 			friendList = friendMap.get(friend);
 		} else {
-			friendList = new HashSet<>();
+			friendList =new ArrayList<String>();
 			friendMap.put(friend, friendList);
 		}
 		
@@ -29,9 +29,13 @@ public class RepositorySimulator {
 	}
 	
 	public boolean addAsFriend(String sourceFriend, String targetFriend) {
+
+		List<String> friendList = getFriendListByFriend(sourceFriend);
 		
-		Set<String> friendList = getFriendListByFriend(sourceFriend);
-		return friendList.add(targetFriend);
+		if (!friendList.contains(targetFriend)) {
+			friendList.add(targetFriend);
+		}
 		
+		return true;
 	}
 }

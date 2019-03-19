@@ -7,10 +7,10 @@ public class ResponseDTO {
 
 	private boolean success;
 	private int count;
-	private Set<String> friends;
-	private Set<String> recipients;
+	private List<String> friends;
+	private List<String> recipients;
 	
-	public ResponseDTO(boolean success, int count, Set<String> friends, Set<String> recipients) {
+	public ResponseDTO(boolean success, int count, List<String> friends, List<String> recipients) {
 		super();
 		this.success = success;
 		this.count = count;
@@ -36,19 +36,19 @@ public class ResponseDTO {
 		this.count = count;
 	}
 	
-	public Set<String> getFriends() {
+	public List<String> getFriends() {
 		return friends;
 	}
 	
-	public void setFriends(Set<String> friends) {
+	public void setFriends(List<String> friends) {
 		this.friends = friends;
 	}
 	
-	public Set<String> getRecipients() {
+	public List<String> getRecipients() {
 		return recipients;
 	}
 	
-	public void setRecipients(Set<String> recipients) {
+	public void setRecipients(List<String> recipients) {
 		this.recipients = recipients;
 	}
 }

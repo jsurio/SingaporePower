@@ -26,7 +26,7 @@ public class FriendController {
 	@RequestMapping(value = "/add")
 	public ResponseDTO addFriend(@RequestBody RequestDTO request) {
 		
-		return service.addFriend(request);
+		return service.add(request);
 	}
 	
 	/**
@@ -39,17 +39,30 @@ public class FriendController {
 	@RequestMapping(value = "/list")
 	public ResponseDTO listFriend(@RequestBody RequestDTO request) {
 		
-		return service.listFriend(request);
+		return service.list(request);
 	}
 	
 	/**
 	 * Get common friends.
-	 * 
+	 * <p>
 	 * Gets only the common friends between the two parameter.
 	 */
 	@RequestMapping(value = "/common")
 	public ResponseDTO commonFriend(@RequestBody RequestDTO request) {
 		
-		return service.commonFriend(request);
+		return service.common(request);
+	}
+	
+	/**
+	 * Subscribe to someone.
+	 * 
+	 * Using the requestor and the target as a parameter,
+	 * requestor will be added to the target's subscriber list 
+	 * and will be notified once the target notified everyone.
+	 */
+	@RequestMapping(value = "/subscribe")
+	public ResponseDTO subscribe(@RequestBody RequestDTO request) {
+		
+		return service.subscribe(request);
 	}
 }

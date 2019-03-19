@@ -8,8 +8,11 @@ import sp.exam.dto.ResponseDTO;
 @Service
 public interface FriendService {
 	
-	ResponseDTO addFriend(RequestDTO request);
-	ResponseDTO listFriend(RequestDTO request);
-	ResponseDTO commonFriend(RequestDTO request);
+	ResponseDTO add(RequestDTO request);
+	ResponseDTO list(RequestDTO request);
+	ResponseDTO common(RequestDTO request);
+	ResponseDTO subscribe(RequestDTO request);
+	ResponseDTO block(RequestDTO request);
+	ResponseDTO notify(RequestDTO request);
 	
 }

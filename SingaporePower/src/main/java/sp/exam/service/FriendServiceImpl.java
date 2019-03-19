@@ -21,7 +21,7 @@ public class FriendServiceImpl implements FriendService {
 	private RepositorySimulator repo;
 	
 	@Override
-	public ResponseDTO addFriend(RequestDTO request) {
+	public ResponseDTO add(RequestDTO request) {
 		if (ObjectUtils.isEmpty(request) 
 				|| CollectionUtils.isEmpty(request.getFriends())) {
 			return null;
@@ -41,14 +41,14 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	@Override
-	public ResponseDTO listFriend(RequestDTO request) {
+	public ResponseDTO list(RequestDTO request) {
 		if (ObjectUtils.isEmpty(request) 
 				|| StringUtils.isEmpty(request.getEmail())) {
 			return null;
 		}
 		
 		ResponseDTO response = new ResponseDTO();
-		List<String> friendList = repo.getFriendListByFriend(request.getEmail());
+		List<String> friendList = repo.getFriendListById(request.getEmail());
 		response.setFriends(friendList);
 		response.setSuccess(true);
 		response.setCount(friendList.size());
@@ -57,7 +57,7 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	@Override
-	public ResponseDTO commonFriend(RequestDTO request) {
+	public ResponseDTO common(RequestDTO request) {
 		if (ObjectUtils.isEmpty(request) 
 				|| CollectionUtils.isEmpty(request.getFriends())) {
 			return null;
@@ -66,12 +66,12 @@ public class FriendServiceImpl implements FriendService {
 		ResponseDTO response = new ResponseDTO();
 		
 		String friend1 = request.getFriends().get(0);
-		List<String> friend1List = repo.getFriendListByFriend(friend1);
+		List<String> friend1List = repo.getFriendListById(friend1);
 		List<String> friend1ListCopy = new ArrayList<String>(friend1List);
 		Collections.copy(friend1ListCopy, friend1List);
 		
 		String friend2 = request.getFriends().get(1);
-		List<String> friend2List = repo.getFriendListByFriend(friend2);
+		List<String> friend2List = repo.getFriendListById(friend2);
 		List<String> friend2ListCopy = new ArrayList<String>(friend2List);
 		Collections.copy(friend2ListCopy, friend2List);
 		
@@ -81,6 +81,32 @@ public class FriendServiceImpl implements FriendService {
 		response.setCount(friend1ListCopy.size());
 		
 		return response;
+	}
+
+	@Override
+	public ResponseDTO subscribe(RequestDTO request) {
+		if (ObjectUtils.isEmpty(request) 
+				|| StringUtils.isEmpty(request.getRequestor())
+				|| StringUtils.isEmpty(request.getTarget())) {
+			return null;
+		}
+		
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(repo.addSubscriber(request.getRequestor(), request.getTarget()));
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDTO block(RequestDTO request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseDTO notify(RequestDTO request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 public class RepositorySimulator {
 	
 	private Map<String, List<String>> friendMap = new HashMap<String, List<String>>();
+	private Map<String, List<String>> subscriberMap = new HashMap<String, List<String>>();
+	private Map<String, List<String>> blockedMap = new HashMap<String, List<String>>();
 	
-	public List<String> getFriendListByFriend(String friend) {
+	public List<String> getFriendListById(String friend) {
 		
 		List<String> friendList = new ArrayList<String>();
 		if (friendMap.containsKey(friend)) {
@@ -28,12 +30,51 @@ public class RepositorySimulator {
 		
 	}
 	
-	public boolean addAsFriend(String sourceFriend, String targetFriend) {
-
-		List<String> friendList = getFriendListByFriend(sourceFriend);
+	public List<String> getSubscriberListById(String subscriber) {
 		
-		if (!friendList.contains(targetFriend)) {
-			friendList.add(targetFriend);
+		List<String> subscriberList = new ArrayList<String>();
+		if (subscriberMap.containsKey(subscriber)) {
+			subscriberList = subscriberMap.get(subscriber);
+		} else {
+			subscriberList =new ArrayList<String>();
+			subscriberMap.put(subscriber, subscriberList);
+		}
+		
+		return subscriberList;
+		
+	}
+
+//	public List<String> getBlockedListByFriend(String friend) {
+//	
+//	List<String> blockedList = new ArrayList<String>();
+//	if (blockedMap.containsKey(friend)) {
+//		blockedList = blockedMap.get(friend);
+//	} else {
+//		blockedList =new ArrayList<String>();
+//		blockedMap.put(friend, blockedList);
+//	}
+//	
+//	return blockedList;
+//	
+//	}
+	
+	public boolean addAsFriend(String source, String target) {
+
+		List<String> friendList = getFriendListById(source);
+		
+		if (!friendList.contains(target)) {
+			friendList.add(target);
+		}
+		
+		return true;
+	}
+	
+	public boolean addSubscriber(String requestor, String target) {
+
+		List<String> subscriberList = getSubscriberListById(target);
+		
+		if (!subscriberList.contains(requestor)) {
+			subscriberList.add(requestor);
 		}
 		
 		return true;

@@ -13,7 +13,7 @@ import com.jayway.restassured.response.Headers;
 public class TestFiendController {
 	
 	@Test
-	public void aTestAddFriend() {
+	public void aTestAdd() {
 		RestAssured.given()
 			.headers(new Headers(new Header("Content-Type", "application/json")))
 			.body("{ \"friends\": [ \"andy@example.com\", \"john@example.com\" ]}")
@@ -25,7 +25,7 @@ public class TestFiendController {
 	}
 	
 	@Test
-	public void bTestListFriend() {
+	public void bTestList() {
 		RestAssured.given()
 			.headers(new Headers(new Header("Content-Type", "application/json")))
 			.body("{ \"friends\": [ \"andy@example.com\", \"john@example.com\" ]}")
@@ -45,7 +45,7 @@ public class TestFiendController {
 	}
 	
 	@Test
-	public void cTestCommonFriend() {
+	public void cTestCommon() {
 		RestAssured.given()
 			.headers(new Headers(new Header("Content-Type", "application/json")))
 			.body("{ \"friends\": [ \"andy@example.com\","
@@ -65,6 +65,21 @@ public class TestFiendController {
 			.body("friends", Matchers.hasItem("common@example.com"))
 			.body("friends", Matchers.hasItem("anothercommon@example.com"))
 			.body("friends", Matchers.hasItem("morecommon@example.com"))
+		;
+	}
+	
+	@Test
+	public void dTestSubscribe() {
+		RestAssured.given()
+		.headers(new Headers(new Header("Content-Type", "application/json")))
+		.body("{\r\n" + 
+				"\"requestor\": \"requestor@example.com\",\r\n" + 
+				"\"target\": \"target@example.com\"\r\n" + 
+				"}")
+		.when().post("/friend/subscribe")
+		.then()
+		.assertThat()
+			.body("success", Matchers.equalTo(true))
 		;
 	}
 }

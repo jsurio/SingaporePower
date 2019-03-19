@@ -99,13 +99,33 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	public ResponseDTO block(RequestDTO request) {
-		// TODO Auto-generated method stub
-		return null;
+		if (ObjectUtils.isEmpty(request) 
+				|| StringUtils.isEmpty(request.getRequestor())
+				|| StringUtils.isEmpty(request.getTarget())) {
+			return null;
+		}
+		
+		ResponseDTO response = new ResponseDTO();
+		response.setSuccess(repo.addToBlocked(request.getRequestor(), request.getTarget()));
+		
+		return response;
 	}
 
 	@Override
 	public ResponseDTO notify(RequestDTO request) {
-		// TODO Auto-generated method stub
+		if (ObjectUtils.isEmpty(request) 
+				|| StringUtils.isEmpty(request.getSender())
+				|| StringUtils.isEmpty(request.getText())) {
+			return null;
+		}
+		
+		String sender = request.getSender();
+		ResponseDTO response = new ResponseDTO();
+		response.getRecipients().addAll(repo.getFriendListById(sender));
+		response.getRecipients().addAll(repo.getSubscriberListById(sender));
+		//TODO add recipients mentioned in text body
+		
+		response.getRecipients().removeAll(repo.getBlockedListById(sender));
 		return null;
 	}
 

@@ -10,7 +10,7 @@ import com.jayway.restassured.response.Header;
 import com.jayway.restassured.response.Headers;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TestFiendController {
+public class TestFriendController {
 	
 	@Test
 	public void aTestAdd() {
@@ -77,6 +77,21 @@ public class TestFiendController {
 				"\"target\": \"target@example.com\"\r\n" + 
 				"}")
 		.when().post("/friend/subscribe")
+		.then()
+		.assertThat()
+			.body("success", Matchers.equalTo(true))
+		;
+	}
+	
+	@Test
+	public void dTestBlock() {
+		RestAssured.given()
+		.headers(new Headers(new Header("Content-Type", "application/json")))
+		.body("{\r\n" + 
+				"\"requestor\": \"requestor@example.com\",\r\n" + 
+				"\"target\": \"target@example.com\"\r\n" + 
+				"}")
+		.when().post("/friend/block")
 		.then()
 		.assertThat()
 			.body("success", Matchers.equalTo(true))

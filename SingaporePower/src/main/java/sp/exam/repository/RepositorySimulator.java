@@ -44,19 +44,19 @@ public class RepositorySimulator {
 		
 	}
 
-//	public List<String> getBlockedListByFriend(String friend) {
-//	
-//	List<String> blockedList = new ArrayList<String>();
-//	if (blockedMap.containsKey(friend)) {
-//		blockedList = blockedMap.get(friend);
-//	} else {
-//		blockedList =new ArrayList<String>();
-//		blockedMap.put(friend, blockedList);
-//	}
-//	
-//	return blockedList;
-//	
-//	}
+	public List<String> getBlockedListById(String blocker) {
+	
+	List<String> blockedList = new ArrayList<String>();
+	if (blockedMap.containsKey(blocker)) {
+		blockedList = blockedMap.get(blocker);
+	} else {
+		blockedList =new ArrayList<String>();
+		blockedMap.put(blocker, blockedList);
+	}
+	
+	return blockedList;
+	
+	}
 	
 	public boolean addAsFriend(String source, String target) {
 
@@ -75,6 +75,17 @@ public class RepositorySimulator {
 		
 		if (!subscriberList.contains(requestor)) {
 			subscriberList.add(requestor);
+		}
+		
+		return true;
+	}
+	
+	public boolean addToBlocked(String requestor, String target) {
+
+		List<String> blockedList = getSubscriberListById(target);
+		
+		if (!blockedList.contains(requestor)) {
+			blockedList.add(requestor);
 		}
 		
 		return true;

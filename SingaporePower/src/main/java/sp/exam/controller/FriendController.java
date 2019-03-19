@@ -65,4 +65,23 @@ public class FriendController {
 		
 		return service.subscribe(request);
 	}
+	
+	/**
+	 * Block to someone.
+	 * 
+	 * Using the requestor and the target as a parameter,
+	 * requestor will be added to the target's blocked list 
+	 * and <b>NOT</b> will be notified once the target notified everyone.
+	 */
+	@RequestMapping(value = "/block")
+	public ResponseDTO block(@RequestBody RequestDTO request) {
+		
+		return service.block(request);
+	}
+	
+	@RequestMapping(value = "/notify")
+	public ResponseDTO notify(@RequestBody RequestDTO request) {
+		
+		return service.notify(request);
+	}
 }
